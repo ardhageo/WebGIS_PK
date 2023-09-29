@@ -8,6 +8,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
@@ -16,8 +17,7 @@
             height: 100%;
             padding: 0;
             margin: 0;
-        }
-        .leaflet-popup-content > table img {
+        }.leaflet-popup-content > table img {
             width: 200px;
         }
         .leaflet-popup-content > img { 
@@ -41,6 +41,7 @@
         <script src="js/labels.js"></script>
         <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
         <script src="js/leaflet-measure.js"></script>
+        <script src="js/leaflet-search.js"></script>
         <script src="data/SatuanPendidikanAmanBencanaSPAB_25.js"></script>
         <script src="data/EarlyWarningSystemEWS_26.js"></script>
         <script src="data/RambuKebencanaan_27.js"></script>
@@ -311,10 +312,6 @@
                     <tr>\
                         <th scope="row">Tahun</th>\
                         <td>' + (feature.properties['Tahun'] !== null ? autolinker.link(feature.properties['Tahun'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Jumlah Peserta</th>\
-                        <td>' + (feature.properties['Jumlah Peserta'] !== null ? autolinker.link(feature.properties['Jumlah Peserta'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2"><strong>Foto</strong><br />' + (feature.properties['Foto'] !== null ? '<img src="images/' + String(feature.properties['Foto']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
@@ -928,6 +925,13 @@
         var baseMaps = {};
         L.control.layers(baseMaps,{'<img src="legend/PapanInformasiBaliho_30.png" /> Papan Informasi (Baliho)': layer_PapanInformasiBaliho_30,'<img src="legend/DESTANA2023_29.png" /> DESTANA 2023': layer_DESTANA2023_29,'<img src="legend/RekapRambuPerKabupaten_28.png" /> Rekap Rambu Per Kabupaten': layer_RekapRambuPerKabupaten_28,'Rambu Kebencanaan<br /><table><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_JalurEvakuasi0.png" /></td><td>Jalur Evakuasi</td></tr><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_TitikKumpul1.png" /></td><td>Titik Kumpul</td></tr><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_PeringatanBanjir2.png" /></td><td>Peringatan Banjir</td></tr><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_PeringatanLongsor3.png" /></td><td>Peringatan Longsor</td></tr><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_PeringatanTsunami4.png" /></td><td>Peringatan Tsunami</td></tr><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_PeringatanPutingBeliung5.png" /></td><td>Peringatan Puting Beliung</td></tr><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_PapanHimbauanLongsor6.png" /></td><td>Papan Himbauan Longsor</td></tr><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_PapanHimbauanLongsordanPohonTumbang7.png" /></td><td>Papan Himbauan Longsor dan Pohon Tumbang</td></tr><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_PapanHimbauanPuttingBeliung8.png" /></td><td>Papan Himbauan Putting Beliung</td></tr><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_PapanHimbauanTsunami9.png" /></td><td>Papan Himbauan Tsunami</td></tr><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_PapanDesaTangguhBencana10.png" /></td><td>Papan Desa Tangguh Bencana</td></tr><tr><td style="text-align: center;"><img src="legend/RambuKebencanaan_27_PeringatanErupsiGunungApi11.png" /></td><td>Peringatan Erupsi Gunung Api</td></tr></table>': layer_RambuKebencanaan_27,'<img src="legend/EarlyWarningSystemEWS_26.png" /> Early Warning System (EWS)': layer_EarlyWarningSystemEWS_26,'<img src="legend/SatuanPendidikanAmanBencanaSPAB_25.png" /> Satuan Pendidikan Aman Bencana (SPAB)': layer_SatuanPendidikanAmanBencanaSPAB_25,"Bahaya Banjir": layer_BahayaBanjir_24,"Bahaya Banjir Bandang": layer_BahayaBanjirBandang_23,"Bahaya Covid-19": layer_BahayaCovid19_22,"Bahaya Cuaca Ekstrem": layer_BahayaCuacaEkstrem_21,"Bahaya Epidemi dan Wabah": layer_BahayaEpidemidanWabah_20,"Bahaya Gagal Teknologi": layer_BahayaGagalTeknologi_19,"Bahaya Gelombang Ekstrem dan Abrasi": layer_BahayaGelombangEkstremdanAbrasi_18,"Bahaya Gempa Bumi": layer_BahayaGempaBumi_17,"Bahaya Karhutla": layer_BahayaKarhutla_16,"Bahaya Kekeringan": layer_BahayaKekeringan_15,"Bahaya Likuefaksi": layer_BahayaLikuefaksi_14,"Bahaya Tanah Longsor": layer_BahayaTanahLongsor_13,"Bahaya Tsunami": layer_BahayaTsunami_12,"Bahaya Erupsi Bromo": layer_BahayaErupsiBromo_11,"Bahaya Erupsi Iyang Argopuro": layer_BahayaErupsiIyangArgopuro_10,"Bahaya Erupsi Iyang Ijen": layer_BahayaErupsiIyangIjen_9,"Bahaya Erupsi Kelud": layer_BahayaErupsiKelud_8,"Bahaya Erupsi Lamongan": layer_BahayaErupsiLamongan_7,"Bahaya Erupsi Lawu": layer_BahayaErupsiLawu_6,"Bahaya Erupsi Raung": layer_BahayaErupsiRaung_5,"Bahaya Erupsi Semeru": layer_BahayaErupsiSemeru_4,"Bahaya Erupsi Welirang": layer_BahayaErupsiWelirang_3,"Bahaya Erupsi Wilis": layer_BahayaErupsiWilis_2,"Multi Bahaya": layer_MultiBahaya_1,"Google Earth": layer_GoogleEarth_0,}).addTo(map);
         setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_RambuKebencanaan_27,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'Kabupaten'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
         L.ImageOverlay.include({
             getBounds: function () {
                 return this._bounds;
